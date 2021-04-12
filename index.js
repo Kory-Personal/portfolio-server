@@ -8,6 +8,6 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 
-const server = require('./lib/server.js');
+const server = require('./server.js');
 
 server.start(process.env.PORT);

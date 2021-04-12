@@ -6,7 +6,7 @@ class Model {
   }
 
   post(obj) {
-    let newRecord = new this.schema(obj);
+    let newRecord = this.schema(obj);
     return newRecord.save();
   }
 
