@@ -7,6 +7,8 @@ const logger = require('./middleware/logger.js');
 const notFoundHandler = require('./middleware/404.js');
 const errorHandler = require('./middleware/500.js');
 
+// const scribe = require('./assets/d&d-scribe.jpg');
+
 
 const app = express();
 
@@ -21,6 +23,9 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1', apiRoutes);
+// app.use('/d&d-scribe', (req, res) => {
+//   res.send(scribe);
+// })
 
 app.use('*', notFoundHandler);
 
