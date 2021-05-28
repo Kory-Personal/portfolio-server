@@ -3,13 +3,11 @@
 const express = require('express');
 const cors = require('cors');
 const apiRoutes = require('./api/api-v1.js');
+const email = require('./api/send-email.js');
 const logger = require('./middleware/logger.js');
 const notFoundHandler = require('./middleware/404.js');
-const errorHandler = require('./middleware/500.js');
-
-// const scribe = require('./assets/d&d-scribe.jpg');
-
-
+// const errorHandler = require('./middleware/500.js');
+ 
 const app = express();
 
 app.use(cors());
@@ -23,13 +21,10 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1', apiRoutes);
-// app.use('/d&d-scribe', (req, res) => {
-//   res.send(scribe);
-// })
-
+app.use('/api/v2', email);
 app.use('*', notFoundHandler);
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 
 module.exports = {
