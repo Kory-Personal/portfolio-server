@@ -7,7 +7,7 @@ const projects = mongoose.Schema({
   deployed_link: { type: String, required: true },
   github_link: { type: String },
   tools: { type: String, required: true },
-  image: { type: String, required: true },
+  image: { data: Buffer, contentType: String },
   description: { type: String, required: true }
 });
 

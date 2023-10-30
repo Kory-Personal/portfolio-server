@@ -7,6 +7,9 @@ const router = express.Router();
 
 const modelFinder = require(`${cwd}/middleware/model-finder.js`);
 
+var fs = require('fs');
+var path = require('path');
+
 router.param('model', modelFinder.load);
 
 router.get("/:model", getProjects);
@@ -35,7 +38,17 @@ async function getProjects(req, res) {
 
 async function createOne(req, res) {
   try {
-    
+    const object = {
+      name: req.body.name,
+      deployed_link: req.body.deployed_link,
+      github_link: req.body.github_link,
+      tools: req.body.tools,
+      image: {
+        data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+        contentType: 'image/png'
+      },
+      description: req.body.description
+    }
     const response = await req.model.post(req.body);
     console.log(response);
     res.status(200).send(response);
