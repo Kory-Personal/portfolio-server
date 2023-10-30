@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 require('dotenv').config();
 
 const transport = {
@@ -24,6 +25,7 @@ transporter.verify((error, success) => {
   }
 })
 
+router.get('/verify', emailVerify);
 router.post('/send', sendEmail);
 
 async function sendEmail(req, res) {
@@ -51,6 +53,32 @@ async function sendEmail(req, res) {
       }
     })
   } catch (e) {console.error(e)}
+}
+
+async function emailVerify(req, res) {
+  try {
+    console.log(req.query)
+    const emailAddress = req.query.email;
+    const API_KEY = process.env.REAL_EMAIL_API
+    const API_URL = process.env.REAL_EMAIL_URL
+    console.log({ emailAddress })
+    const results = await axios(
+      {
+      method: 'get',
+      url: `${API_URL}?email=${emailAddress}`,
+      crossDomain: true,
+      headers: {
+          Authorization: `Bearer ${API_KEY}`
+      }
+      })
+    console.log(results.data);
+    if (results.data.status === 'valid') {
+      res.status(200).send(results.data.status);
+    } else {
+      res.status(500).send(results.data.status);
+    }
+  } catch (e) {console.error(e)}
+    
 }
 
 module.exports = router;
