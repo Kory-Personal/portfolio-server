@@ -31,13 +31,13 @@ router.post('/send', sendEmail);
 async function sendEmail(req, res) {
   try {
     console.log(req.body);
-    let { name, email, message } = req.body;
-    let content = `name: ${name} \n email: ${email} \n message: ${message}`;
+    let { name, email, number, message } = req.body;
+    let content = `name: ${name} \n email: ${email} \n number: ${number} \n message: ${message}`;
 
     let mail = {
       from: name,
       to: process.env.EMAIL,
-      subject: 'New Message from Portfolio Contact',
+      subject: 'New Contact from ' + name,
       text: content
     }
 
